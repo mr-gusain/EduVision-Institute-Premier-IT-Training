@@ -140,3 +140,15 @@ export const updateRegistrationStatus = async (req, res) => {
         res.status(500).json({ success: false, message: "Server error", error: error.message });
     }
 };
+
+export const deleteRegistration = async (req, res) => {
+    try {
+        const registration = await StudentRegistration.findByIdAndDelete(req.params.id);
+        if (!registration) {
+            return res.status(404).json({ success: false, message: "Registration not found" });
+        }
+        res.json({ success: true, message: "Registration deleted successfully" });
+    } catch (error) {
+        res.status(500).json({ success: false, message: "Server error", error: error.message });
+    }
+};

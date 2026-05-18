@@ -7,7 +7,7 @@ import {
     FiAward, FiBriefcase, FiClock, FiBookOpen,
     FiChevronDown, FiChevronUp, FiCheckCircle,
     FiXCircle, FiAlertCircle, FiSearch, FiFilter,
-    FiFileText
+    FiFileText, FiTrash2
 } from "react-icons/fi";
 import "./StudentRegistrations.css";
 
@@ -48,6 +48,19 @@ const StudentRegistrations = () => {
             toast.error(error.response?.data?.message || "Update failed");
         } finally {
             setUpdatingId(null);
+        }
+    };
+
+    const handleDeleteRegistration = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this registration? This action cannot be undone.")) return;
+        
+        try {
+            await API.delete(`/student-registrations/${id}`);
+            toast.success("Registration deleted successfully");
+            setExpandedId(null);
+            fetchRegistrations();
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Delete failed");
         }
     };
 
@@ -359,21 +372,32 @@ const StudentRegistrations = () => {
                                             </div>
 
                                             {/* Admin Actions */}
-                                            {isAdmin && reg.status === "pending" && (
-                                                <div className="srp-admin-actions">
-                                                    <button
-                                                        className="btn btn-success btn-sm"
-                                                        onClick={() => handleStatusUpdate(reg._id, "approved")}
-                                                        disabled={updatingId === reg._id}
-                                                    >
-                                                        <FiCheckCircle /> {updatingId === reg._id ? "Updating..." : "Approve"}
-                                                    </button>
+                                            {isAdmin && (
+                                                <div className="srp-admin-actions" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
+                                                    {reg.status === "pending" && (
+                                                        <>
+                                                            <button
+                                                                className="btn btn-success btn-sm"
+                                                                onClick={() => handleStatusUpdate(reg._id, "approved")}
+                                                                disabled={updatingId === reg._id}
+                                                            >
+                                                                <FiCheckCircle /> {updatingId === reg._id ? "Updating..." : "Approve"}
+                                                            </button>
+                                                            <button
+                                                                className="btn btn-sm srp-reject-btn"
+                                                                onClick={() => handleStatusUpdate(reg._id, "rejected")}
+                                                                disabled={updatingId === reg._id}
+                                                            >
+                                                                <FiXCircle /> Reject
+                                                            </button>
+                                                        </>
+                                                    )}
                                                     <button
                                                         className="btn btn-sm srp-reject-btn"
-                                                        onClick={() => handleStatusUpdate(reg._id, "rejected")}
-                                                        disabled={updatingId === reg._id}
+                                                        style={{ marginLeft: reg.status === "pending" ? 'auto' : '0' }}
+                                                        onClick={() => handleDeleteRegistration(reg._id)}
                                                     >
-                                                        <FiXCircle /> Reject
+                                                        <FiTrash2 /> Delete Registration
                                                     </button>
                                                 </div>
                                             )}
