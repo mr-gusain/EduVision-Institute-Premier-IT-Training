@@ -5,7 +5,7 @@ import API from "../../utils/api";
 import {
     FiX, FiUser, FiMail, FiPhone, FiCalendar, FiMapPin,
     FiBook, FiAward, FiBriefcase, FiUsers, FiClock,
-    FiMessageSquare, FiCheckCircle, FiChevronRight, FiChevronLeft
+    FiMessageSquare, FiCheckCircle, FiChevronRight, FiChevronLeft, FiCreditCard
 } from "react-icons/fi";
 import "./StudentRegistration.css";
 
@@ -34,7 +34,13 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
         guardianPhone: "",
         preferredBatch: "",
         howDidYouHear: "Other",
-        additionalNotes: ""
+        additionalNotes: "",
+        paymentOption: "Full Payment",
+        cardName: "",
+        cardNumber: "",
+        expiryDate: "",
+        cvv: "",
+        emiTenure: "3 Months"
     });
 
     const handleChange = (e) => {
@@ -61,6 +67,18 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                     return false;
                 }
                 return true;
+            case 4:
+                if (!formData.paymentOption) {
+                    toast.error("Please select a payment option");
+                    return false;
+                }
+                if (formData.paymentOption === "Credit/Debit Card" || formData.paymentOption === "EMI") {
+                    if (!formData.cardName || !formData.cardNumber || !formData.expiryDate || !formData.cvv) {
+                        toast.error("Please fill all card details");
+                        return false;
+                    }
+                }
+                return true;
             default:
                 return true;
         }
@@ -76,7 +94,8 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!validateStep(3)) return;
+        if (step !== 4) return; // Strict guard to prevent early submissions
+        if (!validateStep(4)) return;
 
         setSubmitting(true);
         try {
@@ -101,13 +120,13 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                 guardianPhone: formData.guardianPhone,
                 preferredBatch: formData.preferredBatch,
                 howDidYouHear: formData.howDidYouHear,
-                additionalNotes: formData.additionalNotes
+                additionalNotes: formData.additionalNotes,
+                paymentOption: formData.paymentOption
             };
 
             const res = await API.post("/student-registrations", payload);
             toast.success(res.data.message || "Registration submitted!");
             setSubmitted(true);
-            if (onSuccess) onSuccess(res.data.registration);
         } catch (error) {
             toast.error(error.response?.data?.message || "Registration failed");
         } finally {
@@ -212,7 +231,7 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
 
                 <div className="sr-progress">
                     <div className="sr-progress-bar">
-                        <div className="sr-progress-fill" style={{ width: `${(step / 3) * 100}%` }}></div>
+                        <div className="sr-progress-fill" style={{ width: `${(step / 4) * 100}%` }}></div>
                     </div>
                     <div className="sr-steps">
                         <div className={`sr-step ${step >= 1 ? "active" : ""} ${step > 1 ? "completed" : ""}`}>
@@ -223,14 +242,18 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                             <div className="sr-step-num">{step > 2 ? <FiCheckCircle /> : "2"}</div>
                             <span>Address</span>
                         </div>
-                        <div className={`sr-step ${step >= 3 ? "active" : ""}`}>
-                            <div className="sr-step-num">3</div>
+                        <div className={`sr-step ${step >= 3 ? "active" : ""} ${step > 3 ? "completed" : ""}`}>
+                            <div className="sr-step-num">{step > 3 ? <FiCheckCircle /> : "3"}</div>
                             <span>Academic</span>
+                        </div>
+                        <div className={`sr-step ${step >= 4 ? "active" : ""}`}>
+                            <div className="sr-step-num">4</div>
+                            <span>Payment</span>
                         </div>
                     </div>
                 </div>
 
-                <form onSubmit={handleSubmit} className="sr-form">
+                <form onSubmit={handleSubmit} onKeyDown={(e) => { if (e.key === 'Enter') e.preventDefault(); }} className="sr-form">
                     {step === 1 && (
                         <div className="sr-form-section animate-fadeIn">
                             <h3 className="sr-section-title">
@@ -513,6 +536,96 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                         </div>
                     )}
 
+                    {step === 4 && (
+                        <div className="sr-form-section animate-fadeIn">
+                            <h3 className="sr-section-title">
+                                <FiCreditCard className="sr-section-icon" /> Payment Options
+                            </h3>
+                            <div className="sr-form-grid">
+                                <div className="form-group sr-full-width">
+                                    <label className="form-label">Select Payment Method *</label>
+                                    <div className="sr-payment-methods">
+                                        {["Full Payment", "Installments", "Credit/Debit Card", "EMI", "UPI", "Bank Transfer"].map(method => (
+                                            <div 
+                                                key={method}
+                                                className={`sr-payment-method-card ${formData.paymentOption === method ? 'selected' : ''}`}
+                                                onClick={() => setFormData({...formData, paymentOption: method})}
+                                            >
+                                                <div className="sr-pm-radio">
+                                                    <div className="sr-pm-radio-inner"></div>
+                                                </div>
+                                                <span>{method}</span>
+                                            </div>
+                                        ))}
+                                    </div>
+                                    <p style={{ marginTop: "16px", fontSize: "14px", color: "var(--text-secondary)" }}>
+                                        Course: <strong>{enrollment.course?.title}</strong>
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            {(formData.paymentOption === "Credit/Debit Card" || formData.paymentOption === "EMI") && (
+                                <div className="sr-card-details animate-fadeIn" style={{ marginTop: "24px", padding: "24px", background: "linear-gradient(145deg, var(--bg-card) 0%, var(--bg-secondary) 100%)", borderRadius: "16px", border: "1px solid var(--border-color)", boxShadow: "0 8px 24px rgba(0,0,0,0.06)" }}>
+                                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "20px" }}>
+                                        <h4 style={{ margin: 0, fontSize: "16px", display: "flex", alignItems: "center", gap: "8px", fontWeight: "600", color: "var(--text-primary)" }}>
+                                            <FiCreditCard style={{ color: "var(--primary-light)" }} /> Payment Details
+                                        </h4>
+                                        <div style={{ display: "flex", gap: "8px", opacity: 0.7 }}>
+                                            {/* Dummy payment logos placeholders */}
+                                            <div style={{ width: "36px", height: "24px", background: "#f1f5f9", borderRadius: "4px", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "#64748b", fontWeight: "bold" }}>VISA</div>
+                                            <div style={{ width: "36px", height: "24px", background: "#f1f5f9", borderRadius: "4px", border: "1px solid #e2e8f0", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "10px", color: "#64748b", fontWeight: "bold" }}>MC</div>
+                                        </div>
+                                    </div>
+                                    <div className="sr-form-grid" style={{ gap: "20px" }}>
+                                        <div className="form-group sr-full-width">
+                                            <label className="form-label" style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Name on Card *</label>
+                                            <input type="text" name="cardName" value={formData.cardName} onChange={handleChange} className="form-input" style={{ background: "var(--bg-input)", border: "1px solid var(--border-color)", padding: "12px 16px" }} placeholder="e.g. John Doe" />
+                                        </div>
+                                        <div className="form-group sr-full-width">
+                                            <label className="form-label" style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Card Number *</label>
+                                            <input type="text" name="cardNumber" value={formData.cardNumber} onChange={(e) => {
+                                                let val = e.target.value.replace(/\s/g, "");
+                                                if (val.length > 0) {
+                                                    val = val.match(/.{1,4}/g).join(" ");
+                                                }
+                                                handleChange({ target: { name: 'cardNumber', value: val }});
+                                            }} className="form-input" style={{ background: "var(--bg-input)", border: "1px solid var(--border-color)", padding: "12px 16px", letterSpacing: "2px", fontFamily: "monospace", fontSize: "1rem" }} placeholder="0000 0000 0000 0000" maxLength="19" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label" style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Expiry Date *</label>
+                                            <input type="text" name="expiryDate" value={formData.expiryDate} onChange={(e) => {
+                                                let val = e.target.value.replace(/\D/g, "");
+                                                if (val.length >= 3) {
+                                                    val = val.substring(0, 2) + "/" + val.substring(2, 4);
+                                                }
+                                                handleChange({ target: { name: 'expiryDate', value: val }});
+                                            }} className="form-input" style={{ background: "var(--bg-input)", border: "1px solid var(--border-color)", padding: "12px 16px" }} placeholder="MM/YY" maxLength="5" />
+                                        </div>
+                                        <div className="form-group">
+                                            <label className="form-label" style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>CVV *</label>
+                                            <input type="password" name="cvv" value={formData.cvv} onChange={handleChange} className="form-input" style={{ background: "var(--bg-input)", border: "1px solid var(--border-color)", padding: "12px 16px", letterSpacing: "4px" }} placeholder="•••" maxLength="4" />
+                                        </div>
+                                        {formData.paymentOption === "EMI" && (
+                                            <div className="form-group sr-full-width" style={{ marginTop: "4px" }}>
+                                                <label className="form-label" style={{ fontSize: "0.85rem", color: "var(--text-secondary)" }}>Select EMI Tenure *</label>
+                                                <select name="emiTenure" value={formData.emiTenure} onChange={handleChange} className="form-input" style={{ background: "var(--bg-input)", border: "1px solid var(--border-color)", padding: "12px 16px" }}>
+                                                    <option value="3 Months">3 Months</option>
+                                                    <option value="6 Months">6 Months</option>
+                                                    <option value="9 Months">9 Months</option>
+                                                    <option value="12 Months">12 Months</option>
+                                                </select>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div style={{ marginTop: "24px", paddingTop: "16px", borderTop: "1px solid var(--border-color)", display: "flex", alignItems: "center", justifyContent: "center", gap: "6px" }}>
+                                        <FiCheckCircle style={{ color: "var(--success)", fontSize: "14px" }} />
+                                        <span style={{ fontSize: "12px", color: "var(--text-secondary)" }}>Payments are 256-bit encrypted and secure.</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    )}
+
                     <div className="sr-form-actions">
                         {step > 1 && (
                             <button type="button" className="btn btn-secondary" onClick={prevStep}>
@@ -520,7 +633,7 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                             </button>
                         )}
                         <div className="sr-actions-right">
-                            {step < 3 ? (
+                            {step < 4 ? (
                                 <button type="button" className="btn btn-primary" onClick={nextStep}>
                                     Next <FiChevronRight />
                                 </button>

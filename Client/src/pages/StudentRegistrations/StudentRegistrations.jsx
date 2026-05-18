@@ -51,6 +51,23 @@ const StudentRegistrations = () => {
         }
     };
 
+    const handlePayment = async (enrollmentId) => {
+        try {
+            const { data } = await API.post("/payments/create-checkout-session", {
+                enrollmentId
+            });
+
+            if (!data.success) {
+                toast.error("Failed to create checkout session");
+                return;
+            }
+
+            window.location.href = data.url;
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Payment initialization failed");
+        }
+    };
+
     const toggleExpand = (id) => {
         setExpandedId(expandedId === id ? null : id);
     };
@@ -281,6 +298,10 @@ const StudentRegistrations = () => {
                                                             <span className="srp-detail-value srp-highlight">{reg.preferredBatch || "—"}</span>
                                                         </div>
                                                         <div className="srp-detail-row">
+                                                            <span className="srp-detail-label">Payment Option</span>
+                                                            <span className="srp-detail-value srp-highlight">{reg.paymentOption || "—"}</span>
+                                                        </div>
+                                                        <div className="srp-detail-row">
                                                             <span className="srp-detail-label">How Heard</span>
                                                             <span className="srp-detail-value">{reg.howDidYouHear || "—"}</span>
                                                         </div>
@@ -341,6 +362,18 @@ const StudentRegistrations = () => {
                                                         disabled={updatingId === reg._id}
                                                     >
                                                         <FiXCircle /> Reject
+                                                    </button>
+                                                </div>
+                                            )}
+
+                                            {/* Student Actions */}
+                                            {!isAdmin && reg.status === "pending" && (
+                                                <div className="srp-student-actions" style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid var(--border-color)" }}>
+                                                    <button 
+                                                        className="btn btn-primary"
+                                                        onClick={() => handlePayment(reg.enrollment?._id || reg.enrollment)}
+                                                    >
+                                                        Proceed to Payment
                                                     </button>
                                                 </div>
                                             )}

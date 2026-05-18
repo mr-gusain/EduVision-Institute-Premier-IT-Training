@@ -88,6 +88,11 @@ const studentRegistrationSchema = new mongoose.Schema({
         trim: true,
         default: ""
     },
+    paymentOption: {
+        type: String,
+        enum: ["Full Payment", "Installments", "Credit/Debit Card", "EMI", "UPI", "Bank Transfer"],
+        required: [true, "Payment option is required"]
+    },
     status: {
         type: String,
         enum: ["pending", "approved", "rejected"],

@@ -20,7 +20,8 @@ export const submitRegistration = async (req, res) => {
             guardianPhone,
             preferredBatch,
             howDidYouHear,
-            additionalNotes
+            additionalNotes,
+            paymentOption
         } = req.body;
 
         const enrollment = await Enrollment.findOne({ _id: enrollmentId, user: userId });
@@ -50,7 +51,8 @@ export const submitRegistration = async (req, res) => {
             guardianPhone,
             preferredBatch,
             howDidYouHear,
-            additionalNotes
+            additionalNotes,
+            paymentOption
         });
 
         const populatedReg = await StudentRegistration.findById(registration._id)

@@ -467,3 +467,60 @@
         padding: 12px;
     }
 }
+
+.sr-payment-methods {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 12px;
+    margin-top: 8px;
+}
+
+.sr-payment-method-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-md);
+    background: var(--bg-input);
+    cursor: pointer;
+    transition: all var(--transition-fast);
+}
+
+.sr-payment-method-card:hover {
+    border-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.sr-payment-method-card.selected {
+    border-color: var(--primary-light);
+    background: rgba(99, 102, 241, 0.05);
+}
+
+.sr-pm-radio {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 2px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+}
+
+.sr-payment-method-card.selected .sr-pm-radio {
+    border-color: var(--primary-light);
+}
+
+.sr-pm-radio-inner {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--primary-light);
+    transform: scale(0);
+    transition: transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.sr-payment-method-card.selected .sr-pm-radio-inner {
+    transform: scale(1);
+}
