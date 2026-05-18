@@ -177,9 +177,21 @@ const StudentRegistrations = () => {
                                         <div className="srp-card-summary">
                                             <div className="srp-card-top">
                                                 <h3 className="srp-card-name">{reg.fullName}</h3>
-                                                <span className={`badge ${getStatusClass(reg.status)}`}>
-                                                    {getStatusIcon(reg.status)} {reg.status}
-                                                </span>
+                                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
+                                                    <span className={`badge ${getStatusClass(reg.status)}`}>
+                                                        {getStatusIcon(reg.status)} Reg: {reg.status}
+                                                    </span>
+                                                    {reg.enrollment && (
+                                                        <span className={`badge ${
+                                                            reg.enrollment.paymentStatus === "Completed" ? "badge-success" : 
+                                                            reg.enrollment.paymentStatus === "Failed" ? "badge-accent" : "badge-warning"
+                                                        }`}>
+                                                            {reg.enrollment.paymentStatus === "Completed" ? <FiCheckCircle /> : 
+                                                             reg.enrollment.paymentStatus === "Failed" ? <FiXCircle /> : <FiAlertCircle />}
+                                                            Pay: {reg.enrollment.paymentStatus || "Pending"}
+                                                        </span>
+                                                    )}
+                                                </div>
                                             </div>
                                             <div className="srp-card-quick-info">
                                                 <span><FiBookOpen /> {reg.course?.title || "—"}</span>
@@ -367,7 +379,7 @@ const StudentRegistrations = () => {
                                             )}
 
                                             {/* Student Actions */}
-                                            {!isAdmin && reg.status === "pending" && (
+                                            {!isAdmin && reg.status === "pending" && (!reg.enrollment || reg.enrollment.paymentStatus === "Pending") && (
                                                 <div className="srp-student-actions" style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid var(--border-color)" }}>
                                                     <button 
                                                         className="btn btn-primary"
