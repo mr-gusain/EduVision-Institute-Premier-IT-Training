@@ -16,6 +16,7 @@ const Courses = () => {
     const [sort, setSort] = useState("");
     const [expandedCourse, setExpandedCourse] = useState(null);
     const [enrolling, setEnrolling] = useState(null);
+    const [myEnrollments, setMyEnrollments] = useState([]);
     const [showRegistration, setShowRegistration] = useState(false);
     const [currentEnrollment, setCurrentEnrollment] = useState(null);
 
@@ -40,6 +41,16 @@ const Courses = () => {
         setLoading(true);
         fetchCourses();
     }, [fetchCourses]);
+
+    useEffect(() => {
+        if (isAuthenticated) {
+            API.get("/enrollments/my")
+                .then(res => setMyEnrollments(res.data.enrollments || []))
+                .catch(err => console.error("Failed to load enrollments", err));
+        } else {
+            setMyEnrollments([]);
+        }
+    }, [isAuthenticated]);
 
     useEffect(() => {
         const query = new URLSearchParams(window.location.search);
@@ -198,13 +209,30 @@ const Courses = () => {
                                                     <span className="price-save">Save ₹{(course.price - course.discountPrice)?.toLocaleString()}</span>
                                                 )}
                                             </div>
-                                            <button
-                                                className="btn btn-primary"
-                                                onClick={() => handleEnroll(course._id)}
-                                                disabled={enrolling === course._id}
-                                            >
-                                                {enrolling === course._id ? "Enrolling..." : "Enroll Now"}
-                                            </button>
+                                            {(() => {
+                                                const isEnrolled = myEnrollments.some(e => 
+                                                    (typeof e.course === 'object' ? e.course._id === course._id : e.course === course._id) && 
+                                                    e.status !== 'cancelled'
+                                                );
+                                                
+                                                if (isEnrolled) {
+                                                    return (
+                                                        <button className="btn btn-success" disabled>
+                                                            <FiCheck /> Enrolled
+                                                        </button>
+                                                    );
+                                                }
+                                                
+                                                return (
+                                                    <button
+                                                        className="btn btn-primary"
+                                                        onClick={() => handleEnroll(course._id)}
+                                                        disabled={enrolling === course._id}
+                                                    >
+                                                        {enrolling === course._id ? "Enrolling..." : "Enroll Now"}
+                                                    </button>
+                                                );
+                                            })()}
                                             <button
                                                 className="btn btn-secondary btn-sm"
                                                 onClick={() => setExpandedCourse(expandedCourse === course._id ? null : course._id)}

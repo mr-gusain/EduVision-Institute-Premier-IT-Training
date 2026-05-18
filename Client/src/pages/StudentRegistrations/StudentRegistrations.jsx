@@ -53,7 +53,7 @@ const StudentRegistrations = () => {
 
     const handleDeleteRegistration = async (id) => {
         if (!window.confirm("Are you sure you want to delete this registration? This action cannot be undone.")) return;
-        
+
         try {
             await API.delete(`/student-registrations/${id}`);
             toast.success("Registration deleted successfully");
@@ -122,10 +122,10 @@ const StudentRegistrations = () => {
                 </div>
                 <div className="container">
                     <h1 className="page-hero-title">
-                        {isAdmin ? "All Student Registrations" : "My Registrations"}
+                        { isAdmin ? "All Student Registrations" : "My Registrations" }
                     </h1>
                     <p className="page-hero-subtitle">
-                        {isAdmin
+                        { isAdmin
                             ? "View and manage all student registration details"
                             : "View your course registration details and status"
                         }
@@ -135,23 +135,23 @@ const StudentRegistrations = () => {
 
             <section className="section">
                 <div className="container">
-                    {/* Filters */}
+                    {/* Filters */ }
                     <div className="srp-filters glass-card">
                         <div className="srp-search-wrap">
                             <FiSearch className="srp-search-icon" />
                             <input
                                 type="text"
-                                value={search}
-                                onChange={(e) => setSearch(e.target.value)}
-                                placeholder={isAdmin ? "Search by name, email, phone, or course..." : "Search your registrations..."}
+                                value={ search }
+                                onChange={ (e) => setSearch(e.target.value) }
+                                placeholder={ isAdmin ? "Search by name, email, phone, or course..." : "Search your registrations..." }
                                 className="srp-search-input"
                             />
                         </div>
                         <div className="srp-filter-group">
                             <FiFilter />
                             <select
-                                value={statusFilter}
-                                onChange={(e) => setStatusFilter(e.target.value)}
+                                value={ statusFilter }
+                                onChange={ (e) => setStatusFilter(e.target.value) }
                                 className="srp-filter-select"
                             >
                                 <option value="">All Status</option>
@@ -162,67 +162,66 @@ const StudentRegistrations = () => {
                         </div>
                         <div className="srp-count">
                             <FiFileText />
-                            <span>{filteredRegistrations.length} Registration{filteredRegistrations.length !== 1 ? "s" : ""}</span>
+                            <span>{ filteredRegistrations.length } Registration{ filteredRegistrations.length !== 1 ? "s" : "" }</span>
                         </div>
                     </div>
 
-                    {/* Content */}
-                    {loading ? (
+                    {/* Content */ }
+                    { loading ? (
                         <div className="loading-spinner"><div className="spinner"></div></div>
                     ) : filteredRegistrations.length === 0 ? (
                         <div className="srp-empty glass-card">
                             <FiFileText className="srp-empty-icon" />
                             <h3>No registrations found</h3>
-                            <p>{registrations.length === 0
+                            <p>{ registrations.length === 0
                                 ? "No student registrations have been submitted yet."
                                 : "Try adjusting your search or filter."
                             }</p>
                         </div>
                     ) : (
                         <div className="srp-list">
-                            {filteredRegistrations.map((reg) => (
-                                <div key={reg._id} className={`srp-card glass-card ${expandedId === reg._id ? "expanded" : ""}`}>
-                                    {/* Card Header - Always Visible */}
-                                    <div className="srp-card-header" onClick={() => toggleExpand(reg._id)}>
+                            { filteredRegistrations.map((reg) => (
+                                <div key={ reg._id } className={ `srp-card glass-card ${expandedId === reg._id ? "expanded" : ""}` }>
+                                    {/* Card Header - Always Visible */ }
+                                    <div className="srp-card-header" onClick={ () => toggleExpand(reg._id) }>
                                         <div className="srp-card-avatar">
                                             <FiUser />
                                         </div>
                                         <div className="srp-card-summary">
                                             <div className="srp-card-top">
-                                                <h3 className="srp-card-name">{reg.fullName}</h3>
-                                                <div style={{ display: "flex", gap: "8px", flexWrap: "wrap" }}>
-                                                    <span className={`badge ${getStatusClass(reg.status)}`}>
-                                                        {getStatusIcon(reg.status)} Reg: {reg.status}
+                                                <h3 className="srp-card-name">{ reg.fullName }</h3>
+                                                <div style={ { display: "flex", gap: "8px", flexWrap: "wrap" } }>
+                                                    <span className={ `badge ${getStatusClass(reg.status)}` }>
+                                                        { getStatusIcon(reg.status) } Reg: { reg.status }
                                                     </span>
-                                                    {reg.enrollment && (
-                                                        <span className={`badge ${
-                                                            reg.enrollment.paymentStatus === "Completed" ? "badge-success" : 
-                                                            reg.enrollment.paymentStatus === "Failed" ? "badge-accent" : "badge-warning"
-                                                        }`}>
-                                                            {reg.enrollment.paymentStatus === "Completed" ? <FiCheckCircle /> : 
-                                                             reg.enrollment.paymentStatus === "Failed" ? <FiXCircle /> : <FiAlertCircle />}
-                                                            Pay: {reg.enrollment.paymentStatus || "Pending"}
+                                                    { reg.enrollment && (
+                                                        <span className={ `badge ${reg.enrollment.paymentStatus === "Completed" ? "badge-success" :
+                                                                reg.enrollment.paymentStatus === "Failed" ? "badge-accent" : "badge-warning"
+                                                            }` }>
+                                                            { reg.enrollment.paymentStatus === "Completed" ? <FiCheckCircle /> :
+                                                                reg.enrollment.paymentStatus === "Failed" ? <FiXCircle /> : <FiAlertCircle /> }
+                                                            Pay: { reg.enrollment.paymentStatus || "Pending" }
                                                         </span>
-                                                    )}
+                                                    ) }
                                                 </div>
                                             </div>
                                             <div className="srp-card-quick-info">
-                                                <span><FiBookOpen /> {reg.course?.title || "—"}</span>
-                                                <span><FiMail /> {reg.email}</span>
-                                                <span><FiPhone /> {reg.phone}</span>
-                                                <span><FiClock /> {reg.preferredBatch} Batch</span>
+                                                <span><FiBookOpen /> { reg.course?.title || "—" }</span>
+                                                <span><FiMail /> { reg.email }</span>
+                                                <span><FiPhone /> { reg.phone }</span>
+                                                <span><FiClock /> { reg.preferredBatch } Batch</span>
                                             </div>
                                         </div>
                                         <button className="srp-toggle-btn">
-                                            {expandedId === reg._id ? <FiChevronUp /> : <FiChevronDown />}
+                                            { expandedId === reg._id ? <FiChevronUp /> : <FiChevronDown /> }
                                         </button>
                                     </div>
 
-                                    {/* Expanded Details */}
-                                    {expandedId === reg._id && (
+                                    {/* Expanded Details */ }
+                                    { expandedId === reg._id && (
                                         <div className="srp-card-details">
                                             <div className="srp-details-grid">
-                                                {/* Personal Information */}
+                                                {/* Personal Information */ }
                                                 <div className="srp-detail-section">
                                                     <h4 className="srp-detail-title">
                                                         <FiUser /> Personal Information
@@ -230,20 +229,20 @@ const StudentRegistrations = () => {
                                                     <div className="srp-detail-rows">
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Full Name</span>
-                                                            <span className="srp-detail-value">{reg.fullName}</span>
+                                                            <span className="srp-detail-value">{ reg.fullName }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Email</span>
-                                                            <span className="srp-detail-value">{reg.email}</span>
+                                                            <span className="srp-detail-value">{ reg.email }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Phone</span>
-                                                            <span className="srp-detail-value">{reg.phone}</span>
+                                                            <span className="srp-detail-value">{ reg.phone }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Date of Birth</span>
                                                             <span className="srp-detail-value">
-                                                                {reg.dateOfBirth
+                                                                { reg.dateOfBirth
                                                                     ? new Date(reg.dateOfBirth).toLocaleDateString("en-IN", {
                                                                         day: "2-digit", month: "long", year: "numeric"
                                                                     })
@@ -253,12 +252,12 @@ const StudentRegistrations = () => {
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Gender</span>
-                                                            <span className="srp-detail-value">{reg.gender || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.gender || "—" }</span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Address */}
+                                                {/* Address */ }
                                                 <div className="srp-detail-section">
                                                     <h4 className="srp-detail-title">
                                                         <FiMapPin /> Address
@@ -266,24 +265,24 @@ const StudentRegistrations = () => {
                                                     <div className="srp-detail-rows">
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Street</span>
-                                                            <span className="srp-detail-value">{reg.address?.street || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.address?.street || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">City</span>
-                                                            <span className="srp-detail-value">{reg.address?.city || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.address?.city || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">State</span>
-                                                            <span className="srp-detail-value">{reg.address?.state || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.address?.state || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Pincode</span>
-                                                            <span className="srp-detail-value">{reg.address?.pincode || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.address?.pincode || "—" }</span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Course & Academic */}
+                                                {/* Course & Academic */ }
                                                 <div className="srp-detail-section">
                                                     <h4 className="srp-detail-title">
                                                         <FiBookOpen /> Course & Academic
@@ -291,24 +290,24 @@ const StudentRegistrations = () => {
                                                     <div className="srp-detail-rows">
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Course</span>
-                                                            <span className="srp-detail-value srp-highlight">{reg.course?.title || "—"}</span>
+                                                            <span className="srp-detail-value srp-highlight">{ reg.course?.title || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Category</span>
-                                                            <span className="srp-detail-value">{reg.course?.category || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.course?.category || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Qualification</span>
-                                                            <span className="srp-detail-value">{reg.qualification || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.qualification || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">College/School</span>
-                                                            <span className="srp-detail-value">{reg.collegeName || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.collegeName || "—" }</span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Preferences */}
+                                                {/* Preferences */ }
                                                 <div className="srp-detail-section">
                                                     <h4 className="srp-detail-title">
                                                         <FiClock /> Preferences & Other
@@ -316,33 +315,33 @@ const StudentRegistrations = () => {
                                                     <div className="srp-detail-rows">
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Experience</span>
-                                                            <span className="srp-detail-value">{reg.experience || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.experience || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Preferred Batch</span>
-                                                            <span className="srp-detail-value srp-highlight">{reg.preferredBatch || "—"}</span>
+                                                            <span className="srp-detail-value srp-highlight">{ reg.preferredBatch || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Payment Option</span>
-                                                            <span className="srp-detail-value srp-highlight">{reg.paymentOption || "—"}</span>
+                                                            <span className="srp-detail-value srp-highlight">{ reg.paymentOption || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">How Heard</span>
-                                                            <span className="srp-detail-value">{reg.howDidYouHear || "—"}</span>
+                                                            <span className="srp-detail-value">{ reg.howDidYouHear || "—" }</span>
                                                         </div>
                                                         <div className="srp-detail-row">
                                                             <span className="srp-detail-label">Registered On</span>
                                                             <span className="srp-detail-value">
-                                                                {new Date(reg.createdAt).toLocaleDateString("en-IN", {
+                                                                { new Date(reg.createdAt).toLocaleDateString("en-IN", {
                                                                     day: "2-digit", month: "short", year: "numeric"
-                                                                })}
+                                                                }) }
                                                             </span>
                                                         </div>
                                                     </div>
                                                 </div>
 
-                                                {/* Guardian */}
-                                                {(reg.guardianName || reg.guardianPhone) && (
+                                                {/* Guardian */ }
+                                                { (reg.guardianName || reg.guardianPhone) && (
                                                     <div className="srp-detail-section">
                                                         <h4 className="srp-detail-title">
                                                             <FiUser /> Guardian Details
@@ -350,83 +349,83 @@ const StudentRegistrations = () => {
                                                         <div className="srp-detail-rows">
                                                             <div className="srp-detail-row">
                                                                 <span className="srp-detail-label">Guardian Name</span>
-                                                                <span className="srp-detail-value">{reg.guardianName || "—"}</span>
+                                                                <span className="srp-detail-value">{ reg.guardianName || "—" }</span>
                                                             </div>
                                                             <div className="srp-detail-row">
                                                                 <span className="srp-detail-label">Guardian Phone</span>
-                                                                <span className="srp-detail-value">{reg.guardianPhone || "—"}</span>
+                                                                <span className="srp-detail-value">{ reg.guardianPhone || "—" }</span>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                )}
+                                                ) }
 
-                                                {/* Additional Notes */}
-                                                {reg.additionalNotes && (
+                                                {/* Additional Notes */ }
+                                                { reg.additionalNotes && (
                                                     <div className="srp-detail-section srp-notes-section">
                                                         <h4 className="srp-detail-title">
                                                             <FiFileText /> Additional Notes
                                                         </h4>
-                                                        <p className="srp-notes-text">{reg.additionalNotes}</p>
+                                                        <p className="srp-notes-text">{ reg.additionalNotes }</p>
                                                     </div>
-                                                )}
+                                                ) }
                                             </div>
 
-                                            {/* Admin Actions */}
-                                            {isAdmin && (
-                                                <div className="srp-admin-actions" style={{ display: 'flex', gap: '10px', marginTop: '20px' }}>
-                                                    {reg.status === "pending" && (
+                                            {/* Admin Actions */ }
+                                            { isAdmin && (
+                                                <div className="srp-admin-actions" style={ { display: 'flex', gap: '10px', marginTop: '20px' } }>
+                                                    { reg.status === "pending" && (
                                                         <>
                                                             <button
                                                                 className="btn btn-success btn-sm"
-                                                                onClick={() => handleStatusUpdate(reg._id, "approved")}
-                                                                disabled={updatingId === reg._id}
+                                                                onClick={ () => handleStatusUpdate(reg._id, "approved") }
+                                                                disabled={ updatingId === reg._id }
                                                             >
-                                                                <FiCheckCircle /> {updatingId === reg._id ? "Updating..." : "Approve"}
+                                                                <FiCheckCircle /> { updatingId === reg._id ? "Updating..." : "Approve" }
                                                             </button>
                                                             <button
                                                                 className="btn btn-sm srp-reject-btn"
-                                                                onClick={() => handleStatusUpdate(reg._id, "rejected")}
-                                                                disabled={updatingId === reg._id}
+                                                                onClick={ () => handleStatusUpdate(reg._id, "rejected") }
+                                                                disabled={ updatingId === reg._id }
                                                             >
                                                                 <FiXCircle /> Reject
                                                             </button>
                                                         </>
-                                                    )}
+                                                    ) }
                                                     <button
                                                         className="btn btn-sm srp-reject-btn"
-                                                        style={{ marginLeft: reg.status === "pending" ? 'auto' : '0' }}
-                                                        onClick={() => handleDeleteRegistration(reg._id)}
+                                                        style={ { marginLeft: reg.status === "pending" ? 'auto' : '0' } }
+                                                        onClick={ () => handleDeleteRegistration(reg._id) }
                                                     >
                                                         <FiTrash2 /> Delete Registration
                                                     </button>
                                                 </div>
-                                            )}
+                                            ) }
 
-                                            {/* Student Actions */}
-                                            {!isAdmin && reg.status === "pending" && (!reg.enrollment || reg.enrollment.paymentStatus === "Pending") && (
-                                                <div className="srp-student-actions" style={{ display: "flex", justifyContent: "flex-end", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid var(--border-color)" }}>
-                                                    <button 
+                                            {/* Student Actions */ }
+                                            { !isAdmin && reg.status === "pending" && (!reg.enrollment || reg.enrollment.paymentStatus === "Pending") && (
+                                                <div className="srp-student-actions" style={ { display: "flex", justifyContent: "flex-end", marginTop: "16px", paddingTop: "16px", borderTop: "1px solid var(--border-color)" } }>
+                                                    <button
                                                         className="btn btn-primary"
-                                                        onClick={() => handlePayment(reg.enrollment?._id || reg.enrollment)}
+                                                        onClick={ () => handlePayment(reg.enrollment?._id || reg.enrollment) }
                                                     >
                                                         Proceed to Payment
                                                     </button>
                                                 </div>
-                                            )}
+                                            ) }
 
-                                            {/* Admin Info - who submitted */}
-                                            {isAdmin && reg.user && (
+                                            {/* Admin Info - who submitted */ }
+                                            { isAdmin && reg.user && (
                                                 <div className="srp-user-info">
                                                     <span className="srp-user-label">Submitted by Account:</span>
-                                                    <span className="srp-user-value">{reg.user.name} ({reg.user.email})</span>
+                                                    <span className="srp-user-value">{ reg.user.name } ({ reg.user.email })</span>
                                                 </div>
-                                            )}
+                                            ) }
                                         </div>
-                                    )}
+                                    ) }
                                 </div>
-                            ))}
+                            )) }
                         </div>
-                    )}
+                    ) }
                 </div>
             </section>
         </div>
