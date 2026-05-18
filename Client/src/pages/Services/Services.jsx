@@ -57,23 +57,23 @@ const Services = () => {
     const additionalServices = [
         {
             icon: <FiBriefcase />,
-            title: "Corporate Training",
-            desc: "Customized training programs for organizations. Upskill your team with tailored courses and hands-on workshops."
+            title: "Enterprise Upskilling Solutions",
+            desc: "Customized technical curriculum for corporate enterprises, business workgroups, and technology departments."
         },
         {
             icon: <FiUsers />,
-            title: "1:1 Mentoring",
-            desc: "Get personalized guidance from industry experts. Career roadmaps, code reviews, and interview preparation."
+            title: "Advisory & Mentorship Portals",
+            desc: "Weekly personalized check-ins and academic advising with distinguished technical leads and directors."
         },
         {
             icon: <FiBookOpen />,
-            title: "Workshop & Bootcamps",
-            desc: "Intensive weekend workshops and 2-week bootcamps on trending technologies. Fast-track your learning."
+            title: "Executive Seminars & Tech Bootcamps",
+            desc: "Intensive deep-dive seminars, hackathons, and short-duration specialized technical bootcamps."
         },
         {
             icon: <FiAward />,
-            title: "Placement Assistance",
-            desc: "Dedicated placement cell with resume building, mock interviews, and direct referrals to 200+ hiring partners."
+            title: "Alumni Placement & Recruitment",
+            desc: "Dedicated institutional placement corridor supplying vetted engineering candidates directly to global alliances."
         }
     ];
 
@@ -85,17 +85,17 @@ const Services = () => {
                     <div className="hero-orb hero-orb-2"></div>
                 </div>
                 <div className="container">
-                    <h1 className="page-hero-title">Our Services</h1>
-                    <p className="page-hero-subtitle">Comprehensive IT training services designed to launch your tech career</p>
+                    <h1 className="page-hero-title">Academic Programs & Services</h1>
+                    <p className="page-hero-subtitle">Elite technology training tracks, corporate professional pipelines, and career advancement portals.</p>
                 </div>
             </section>
 
             <section className="section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">Training Programs</span>
-                        <h2 className="section-title">What We Offer</h2>
-                        <p className="section-subtitle">Industry-relevant training programs across all major IT domains</p>
+                        <span className="section-label">Core Syllabi Domains</span>
+                        <h2 className="section-title">Institutional Departments</h2>
+                        <p className="section-subtitle">Rigorous, certified technology curricula across all high-demand modern fields</p>
                     </div>
                     <div className="services-grid">
                         {services.map((service, index) => (
@@ -109,7 +109,7 @@ const Services = () => {
                                     ))}
                                 </div>
                                 <Link to="/courses" className="service-link">
-                                    View Courses <FiArrowRight />
+                                    View Syllabi Catalog <FiArrowRight />
                                 </Link>
                             </div>
                         ))}
@@ -120,9 +120,9 @@ const Services = () => {
             <section className="section additional-services">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">Beyond Training</span>
-                        <h2 className="section-title">Additional Services</h2>
-                        <p className="section-subtitle">We go beyond just training to ensure your complete career success</p>
+                        <span className="section-label">Enterprise & Alumni Services</span>
+                        <h2 className="section-title">Beyond Classroom Instruction</h2>
+                        <p className="section-subtitle">We manage holistic technological ecosystems to guarantee candidates excel immediately upon placement</p>
                     </div>
                     <div className="additional-grid">
                         {additionalServices.map((service, index) => (
@@ -139,15 +139,15 @@ const Services = () => {
             <section className="section process-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">How It Works</span>
-                        <h2 className="section-title">Your Learning Journey</h2>
+                        <span className="section-label">Matriculation Methodology</span>
+                        <h2 className="section-title">The Engineering Candidate Pathway</h2>
                     </div>
                     <div className="process-grid">
                         {[
-                            { step: "01", title: "Choose Your Course", desc: "Browse our courses and pick the one that aligns with your career goals." },
-                            { step: "02", title: "Learn from Experts", desc: "Attend live classes, work on projects, and get mentored by industry professionals." },
-                            { step: "03", title: "Build Your Portfolio", desc: "Complete 10+ real-world projects that showcase your skills to employers." },
-                            { step: "04", title: "Get Placed", desc: "Our placement cell helps you with interviews, resume building, and company referrals." }
+                            { step: "01", title: "Domain Selection", desc: "Select a core technological department that aligns directly with your long-term career aspirations." },
+                            { step: "02", title: "Rigorous Faculty Mentoring", desc: "Participate in intensive practical seminars, supervised labs, and 1:1 faculty instruction." },
+                            { step: "03", title: "Capstone Lab Refinement", desc: "Formulate advanced software architectures, assembling a verified, production-grade technical profile." },
+                            { step: "04", title: "Accredited Career Boarding", desc: "Leverage EVIT's corporate corridor to complete interviews and secure high-value placements." }
                         ].map((item, index) => (
                             <div key={index} className="process-card">
                                 <span className="process-step">{item.step}</span>

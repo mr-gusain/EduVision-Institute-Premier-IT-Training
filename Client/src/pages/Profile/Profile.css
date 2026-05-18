@@ -29,7 +29,7 @@
     justify-content: center;
     font-size: 2.5rem;
     font-weight: 800;
-    color: white;
+    color: var(--text-primary);
     margin: 0 auto 16px;
     box-shadow: 0 4px 25px var(--primary-glow);
 }

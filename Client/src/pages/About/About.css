@@ -100,7 +100,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    color: white;
+    color: var(--text-primary);
     margin: 0 auto 20px;
 }
 
@@ -214,7 +214,7 @@
     justify-content: center;
     font-size: 2rem;
     font-weight: 800;
-    color: white;
+    color: var(--text-primary);
     margin: 0 auto 16px;
     box-shadow: 0 4px 20px var(--primary-glow);
 }

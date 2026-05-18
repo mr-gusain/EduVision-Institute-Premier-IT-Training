@@ -26,19 +26,19 @@ const Home = () => {
     }, []);
 
     const stats = [
-        { icon: <FiUsers />, number: "5000+", label: "Students Trained" },
-        { icon: <FiBookOpen />, number: "50+", label: "Expert Courses" },
+        { icon: <FiUsers />, number: "5000+", label: "Alumni Graduated" },
+        { icon: <FiBookOpen />, number: "50+", label: "Academic Curricula" },
         { icon: <FiAward />, number: "95%", label: "Placement Rate" },
-        { icon: <FiTrendingUp />, number: "200+", label: "Hiring Partners" }
+        { icon: <FiTrendingUp />, number: "200+", label: "Corporate Alliances" }
     ];
 
     const features = [
-        { icon: <FiCode />, title: "Industry Experts", desc: "Learn from professionals with 10+ years of real-world experience in top tech companies." },
-        { icon: <FiDatabase />, title: "Hands-on Projects", desc: "Build 15+ real projects that you can showcase in your portfolio and impress recruiters." },
-        { icon: <FiCloud />, title: "Placement Support", desc: "Dedicated placement cell with mock interviews, resume building, and direct company referrals." },
-        { icon: <FiShield />, title: "Flexible Learning", desc: "Choose between online, offline, and hybrid modes. Learn at your own pace with lifetime access." },
-        { icon: <FiLayout />, title: "Certified Programs", desc: "Get industry-recognized certifications upon completion. Boost your resume with verified credentials." },
-        { icon: <FiBarChart />, title: "Career Guidance", desc: "1:1 mentoring sessions, career roadmaps, and personalized learning paths for every student." }
+        { icon: <FiCode />, title: "Distinguished Faculty", desc: "Acquire knowledge directly from leading corporate technologists and certified software engineers with decades of production experience." },
+        { icon: <FiDatabase />, title: "Advanced Lab Practicums", desc: "Construct a robust portfolio of real-world capstone engineering models, mimicking true production environments." },
+        { icon: <FiCloud />, title: "Executive Placement Office", desc: "Benefit from continuous career advancement clinics, comprehensive CV refinement, and direct placements to key corporate partners." },
+        { icon: <FiShield />, title: "Hybrid Delivery Formats", desc: "Align professional schedules seamlessly using flexible campus formats, hybrid classes, and virtual executive sessions." },
+        { icon: <FiLayout />, title: "Accredited Credentials", desc: "Receive globally recognized technical certifications upon completion, verified and respected by global IT enterprises." },
+        { icon: <FiBarChart />, title: "Academic Advising", desc: "Access personalized career development coaching, roadmap pathing, and strategic mentorship roadmaps." }
     ];
 
     const getCategoryIcon = (category) => {
@@ -67,23 +67,23 @@ const Home = () => {
 
                 <div className="container hero-content">
                     <div className="hero-text animate-fadeInUp">
-                        <span className="hero-badge">🚀 #1 IT Training Institute</span>
+                        <span className="hero-badge">🎓 Accredited Graduate IT Programs</span>
                         <h1 className="hero-title">
-                            Transform Your
-                            <span className="hero-gradient"> Career </span>
-                            With Industry-Ready
-                            <span className="hero-gradient"> Tech Skills</span>
+                            Empowering Future
+                            <span className="hero-gradient"> Tech Leaders </span>
+                            Through Advanced
+                            <span className="hero-gradient"> IT Certifications</span>
                         </h1>
                         <p className="hero-subtitle">
-                            Join 5000+ students who've launched successful tech careers with EduVision Institute.
-                            Expert-led courses, real projects, and guaranteed placement support.
+                            Advance your academic and career trajectory with the country's leading technology training academy.
+                            Benefit from industry-approved curriculum, certified professional tracks, and elite corporate placement pipelines.
                         </p>
                         <div className="hero-actions">
                             <Link to="/courses" className="btn btn-primary btn-lg">
-                                Explore Courses <FiArrowRight />
+                                View Academic Catalog <FiArrowRight />
                             </Link>
                             <Link to="/about" className="btn btn-secondary btn-lg">
-                                Learn More
+                                Institutional Profile
                             </Link>
                         </div>
                         <div className="hero-trust">
@@ -98,7 +98,7 @@ const Home = () => {
                                 <div className="trust-stars">
                                     {[1, 2, 3, 4, 5].map(i => <FiStar key={i} className="star-filled" />)}
                                 </div>
-                                <span>4.8/5 from 2000+ reviews</span>
+                                <span>Top Rated Tech Institution (4.8/5 from alumni)</span>
                             </div>
                         </div>
                     </div>
@@ -122,9 +122,9 @@ const Home = () => {
             <section className="section features-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">Why Choose Us</span>
-                        <h2 className="section-title">What Makes EduVision Institute Different</h2>
-                        <p className="section-subtitle">We don't just teach, we transform careers with our unique approach to IT education</p>
+                        <span className="section-label">Institutional Excellence</span>
+                        <h2 className="section-title">Why EduVision Institute of Technology?</h2>
+                        <p className="section-subtitle">We bridge academic learning with enterprise technical execution through strategic methodologies</p>
                     </div>
                     <div className="features-grid">
                         {features.map((feature, index) => (
@@ -141,22 +141,28 @@ const Home = () => {
             <section className="section courses-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">Popular Courses</span>
-                        <h2 className="section-title">Start Learning Today</h2>
-                        <p className="section-subtitle">Choose from our most popular courses and kickstart your tech career</p>
+                        <span className="section-label">Academic Program Catalog</span>
+                        <h2 className="section-title">Core Syllabi & Study Tracks</h2>
+                        <p className="section-subtitle">Select a structured study track engineered to prepare you for senior technology roles</p>
                     </div>
                     <div className="courses-grid">
                         {courses.map((course, index) => (
                             <div key={course._id} className="course-card glass-card" style={{ animationDelay: `${index * 0.1}s` }}>
                                 <div className="course-card-header">
                                     <div className="course-icon">{getCategoryIcon(course.category)}</div>
-                                    <span className="badge badge-primary">{course.level}</span>
+                                    <div className="course-card-badges">
+                                        <span className="badge badge-primary">{course.level}</span>
+                                        <div className="course-rating">
+                                            <FiStar className="star-filled" />
+                                            <span>{course.rating}</span>
+                                        </div>
+                                    </div>
                                 </div>
                                 <h3 className="course-card-title">{course.title}</h3>
                                 <p className="course-card-desc">{course.shortDescription}</p>
                                 <div className="course-card-meta">
                                     <span className="course-duration">⏱ {course.duration}</span>
-                                    <span className="course-students">👥 {course.totalStudents} students</span>
+                                    <span className="course-students">👥 {course.totalStudents} enrolled</span>
                                 </div>
                                 <div className="course-card-footer">
                                     <div className="course-price">
@@ -165,18 +171,14 @@ const Home = () => {
                                         )}
                                         <span className="price-current">₹{(course.discountPrice || course.price)?.toLocaleString()}</span>
                                     </div>
-                                    <Link to="/courses" className="btn btn-primary btn-sm">View Details</Link>
-                                </div>
-                                <div className="course-rating">
-                                    <FiStar className="star-filled" />
-                                    <span>{course.rating}</span>
+                                    <Link to="/courses" className="btn btn-primary btn-sm">View Curriculum</Link>
                                 </div>
                             </div>
                         ))}
                     </div>
                     <div className="section-cta">
                         <Link to="/courses" className="btn btn-secondary btn-lg">
-                            View All Courses <FiArrowRight />
+                            View All Study Tracks <FiArrowRight />
                         </Link>
                     </div>
                 </div>
@@ -186,9 +188,9 @@ const Home = () => {
                 <section className="section testimonials-preview">
                     <div className="container">
                         <div className="section-header">
-                            <span className="section-label">Student Stories</span>
-                            <h2 className="section-title">What Our Students Say</h2>
-                            <p className="section-subtitle">Real stories from real students who transformed their careers with us</p>
+                            <span className="section-label">Alumni Endorsements</span>
+                            <h2 className="section-title">Alumni Success Stories</h2>
+                            <p className="section-subtitle">Verified feedback from students who successfully launched enterprise careers</p>
                         </div>
                         <div className="testimonials-grid">
                             {testimonials.map((t, index) => (
@@ -213,7 +215,7 @@ const Home = () => {
                         </div>
                         <div className="section-cta">
                             <Link to="/testimonials" className="btn btn-secondary btn-lg">
-                                Read More Stories <FiArrowRight />
+                                Read All Alumni Endorsements <FiArrowRight />
                             </Link>
                         </div>
                     </div>
@@ -224,22 +226,22 @@ const Home = () => {
                 <div className="container">
                     <div className="cta-content glass-card">
                         <div className="cta-bg-orb"></div>
-                        <h2 className="cta-title">Ready to Start Your Tech Journey?</h2>
+                        <h2 className="cta-title">Apply for the Next Academic Cohort</h2>
                         <p className="cta-subtitle">
-                            Join EduVision Institute today and get access to world-class training, mentorship, and placement opportunities.
+                            Take the next step in your professional development. Applications are open for upcoming academic and certification cohorts.
                         </p>
                         <div className="cta-actions">
                             <Link to="/register" className="btn btn-accent btn-lg">
-                                Get Started Free <FiArrowRight />
+                                Matriculate / Apply Now <FiArrowRight />
                             </Link>
                             <Link to="/contact" className="btn btn-secondary btn-lg">
-                                Talk to Counselor
+                                Contact Admissions Office
                             </Link>
                         </div>
                         <div className="cta-features">
-                            <span><FiCheck /> Free Demo Classes</span>
-                            <span><FiCheck /> EMI Available</span>
-                            <span><FiCheck /> 100% Placement Assist</span>
+                            <span><FiCheck /> Institutional Trial Classes</span>
+                            <span><FiCheck /> Flexible Tuition Financing</span>
+                            <span><FiCheck /> Verified Placement Support</span>
                         </div>
                     </div>
                 </div>

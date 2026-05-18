@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { FiMenu, FiX, FiUser, FiLogOut, FiBookOpen, FiChevronDown, FiFileText } from "react-icons/fi";
+import { useTheme } from "../../context/ThemeContext";
+import { FiMenu, FiX, FiUser, FiLogOut, FiBookOpen, FiChevronDown, FiFileText, FiSun, FiMoon } from "react-icons/fi";
 import "./Navbar.css";
 
 const Navbar = () => {
     const { user, isAuthenticated, logout } = useAuth();
+    const { theme, toggleTheme } = useTheme();
     const navigate = useNavigate();
     const [isScrolled, setIsScrolled] = useState(false);
     const [isMobileOpen, setIsMobileOpen] = useState(false);
@@ -29,10 +31,10 @@ const Navbar = () => {
     const navLinks = [
         { path: "/", label: "Home" },
         { path: "/about", label: "About" },
-        { path: "/courses", label: "Courses" },
-        { path: "/services", label: "Services" },
-        { path: "/testimonials", label: "Stories" },
-        { path: "/contact", label: "Contact" }
+        { path: "/courses", label: "Academic Catalog" },
+        { path: "/services", label: "Academic Services" },
+        { path: "/testimonials", label: "Alumni Stories" },
+        { path: "/contact", label: "Contact Admissions" }
     ];
 
     return (
@@ -57,6 +59,10 @@ const Navbar = () => {
                             {link.label}
                         </NavLink>
                     ))}
+
+                    <button className="theme-toggle-btn" onClick={toggleTheme} aria-label="Toggle Theme">
+                        {theme === "dark" ? <FiSun /> : <FiMoon />}
+                    </button>
 
                     {isAuthenticated ? (
                         <div className="nav-user-section">

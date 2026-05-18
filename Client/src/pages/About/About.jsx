@@ -4,26 +4,26 @@ import "./About.css";
 
 const About = () => {
     const values = [
-        { icon: <FiTarget />, title: "Mission-Driven", desc: "We're on a mission to democratize tech education and make it accessible to everyone, regardless of their background." },
-        { icon: <FiUsers />, title: "Community First", desc: "We believe in the power of community learning. Our students support and inspire each other throughout the journey." },
-        { icon: <FiAward />, title: "Excellence", desc: "We maintain the highest standards of education with regularly updated curriculum aligned with industry requirements." },
-        { icon: <FiHeart />, title: "Student-Centric", desc: "Every decision we make is guided by one question: Does this help our students succeed in their careers?" }
+        { icon: <FiTarget />, title: "Educational Mission", desc: "We are committed to democratizing access to high-tier technological resources, ensuring all ambitious learners can achieve their potential." },
+        { icon: <FiUsers />, title: "Collaborative Ecosystem", desc: "We foster an collaborative learning model where students, advisors, and faculty build advanced systems together." },
+        { icon: <FiAward />, title: "Academic Rigor", desc: "We maintain rigorous educational curricula designed alongside corporate advisory boards to match actual enterprise standards." },
+        { icon: <FiHeart />, title: "Career Success Orientation", desc: "Every strategic direction, lab build, and research track is engineered around a single objective: the career success of our graduates." }
     ];
 
     const milestones = [
-        { year: "2018", title: "Founded", desc: "EduVision Institute was born with a vision to transform IT education in India." },
-        { year: "2019", title: "500+ Students", desc: "Crossed our first milestone of training 500 students in our first year." },
-        { year: "2020", title: "Online Launch", desc: "Adapted to the digital world with our comprehensive online learning platform." },
-        { year: "2021", title: "50+ Courses", desc: "Expanded our curriculum to cover all major domains of IT industry." },
-        { year: "2022", title: "100+ Hiring Partners", desc: "Partnered with leading tech companies for direct placements." },
-        { year: "2023", title: "5000+ Alumni", desc: "Our alumni network spans across top tech companies globally." }
+        { year: "2018", title: "Academy Founded", desc: "The EduVision Institute of Technology was chartered to bridge the widening gap in advanced software instruction." },
+        { year: "2019", title: "500+ Registered Scholars", desc: "Admitted and trained 500+ active engineering candidates during our introductory year." },
+        { year: "2020", title: "Digital Campus Launch", desc: "Deployed a comprehensive hybrid and virtual learning platform, extending access globally." },
+        { year: "2021", title: "50+ Academic Pathways", desc: "Aggregated an extensive catalog of courses encompassing all core modern engineering and IT domains." },
+        { year: "2022", title: "100+ Corporate Partner Networks", desc: "Established critical recruitment corridors with leading global technology firms." },
+        { year: "2023", title: "5000+ Alumni Cohort", desc: "Graduated an elite network of tech professionals now leading departments inside major multinational firms." }
     ];
 
     const team = [
-        { name: "Dr. Arun Kapoor", role: "Founder & CEO", desc: "20+ years in tech industry. Former VP at Microsoft India." },
-        { name: "Prof. Rajesh Kumar", role: "Head of Academics", desc: "15+ years of teaching experience. Full-stack development expert." },
-        { name: "Dr. Meera Joshi", role: "Data Science Lead", desc: "PhD in ML from IIT. Published researcher with 50+ papers." },
-        { name: "Suresh Nair", role: "Cloud & DevOps Head", desc: "AWS certified architect. 12+ years in cloud infrastructure." }
+        { name: "Dr. Arun Kapoor", role: "Founder & Director", desc: "20+ years of tech industry leadership. Former Vice President at Microsoft India." },
+        { name: "Prof. Rajesh Kumar", role: "Dean of Academic Affairs", desc: "15+ years of software instruction experience. Leading developer and enterprise architect." },
+        { name: "Dr. Meera Joshi", role: "Chair of Machine Learning Research", desc: "PhD in Machine Learning from IIT. Published researcher with 50+ international papers." },
+        { name: "Suresh Nair", role: "Director of Cloud Infrastructure", desc: "Enterprise AWS Certified Solutions Architect. 12+ years managing high-availability networks." }
     ];
 
     return (
@@ -34,8 +34,8 @@ const About = () => {
                     <div className="hero-orb hero-orb-2"></div>
                 </div>
                 <div className="container">
-                    <h1 className="page-hero-title">About EduVision Institute</h1>
-                    <p className="page-hero-subtitle">Transforming lives through world-class IT education since 2018</p>
+                    <h1 className="page-hero-title">About EduVision Institute of Technology</h1>
+                    <p className="page-hero-subtitle">Pioneering technological excellence and empowering professional careers since 2018</p>
                 </div>
             </section>
 
@@ -43,43 +43,42 @@ const About = () => {
                 <div className="container">
                     <div className="about-intro-grid">
                         <div className="about-intro-text animate-slideInLeft">
-                            <span className="section-label">Our Story</span>
-                            <h2 className="about-intro-title">Building the Future of <span className="text-gradient">Tech Education</span></h2>
+                            <span className="section-label">Institutional History</span>
+                            <h2 className="about-intro-title">Fostering Innovation in <span className="text-gradient">Advanced Technical Education</span></h2>
                             <p className="about-intro-desc">
-                                EduVision Institute was founded in 2018 with a singular vision: to bridge the gap between
-                                academic knowledge and industry requirements. We noticed that traditional education
-                                wasn't keeping pace with the rapidly evolving tech industry, leaving graduates
-                                unprepared for real-world challenges.
+                                The EduVision Institute of Technology (EVIT) was chartered in 2018 to resolve the critical
+                                disparity between traditional computer science curricula and active enterprise demands. We observed
+                                that legacy education was failing to keep pace with rapid infrastructure developments, leaving
+                                graduates unqualified for senior technology roles.
                             </p>
                             <p className="about-intro-desc">
-                                Today, we've trained over 5,000 students who are now working at leading tech companies
-                                like Google, Microsoft, Amazon, TCS, Infosys, and many more. Our unique approach combines
-                                expert-led training, hands-on projects, and dedicated placement support to ensure every
-                                student achieves their career goals.
+                                Today, EVIT has successfully matriculated over 5,000 alumni who are currently leading technical teams
+                                at global enterprises including Google, Microsoft, Amazon, TCS, and Infosys. Our unique instructional
+                                methodology blends distinguished faculty mentoring, extensive capstone project builds, and elite career service assistance.
                             </p>
                             <div className="about-highlights">
                                 <div className="highlight-item">
                                     <FiCheck className="highlight-icon" />
-                                    <span>Industry-aligned curriculum updated quarterly</span>
+                                    <span>Enterprise-certified curricula updated quarterly by corporate advisors</span>
                                 </div>
                                 <div className="highlight-item">
                                     <FiCheck className="highlight-icon" />
-                                    <span>95% placement rate with top companies</span>
+                                    <span>95% career placement rate across top-tier technical firms</span>
                                 </div>
                                 <div className="highlight-item">
                                     <FiCheck className="highlight-icon" />
-                                    <span>1:1 mentoring from industry experts</span>
+                                    <span>1:1 advising and mentorship clinics from active technology leaders</span>
                                 </div>
                                 <div className="highlight-item">
                                     <FiCheck className="highlight-icon" />
-                                    <span>Flexible learning modes: online, offline & hybrid</span>
+                                    <span>Flexible delivery models: virtual, residential, and executive hybrid schedules</span>
                                 </div>
                             </div>
                         </div>
                         <div className="about-intro-stats animate-slideInRight">
                             <div className="intro-stat-card glass-card">
                                 <h3>5000+</h3>
-                                <p>Students Trained</p>
+                                <p>Alumni Graduated</p>
                             </div>
                             <div className="intro-stat-card glass-card">
                                 <h3>95%</h3>
@@ -87,11 +86,11 @@ const About = () => {
                             </div>
                             <div className="intro-stat-card glass-card">
                                 <h3>200+</h3>
-                                <p>Hiring Partners</p>
+                                <p>Corporate Alliances</p>
                             </div>
                             <div className="intro-stat-card glass-card">
                                 <h3>50+</h3>
-                                <p>Expert Courses</p>
+                                <p>Academic Pathways</p>
                             </div>
                         </div>
                     </div>
@@ -101,9 +100,9 @@ const About = () => {
             <section className="section values-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">Our Values</span>
-                        <h2 className="section-title">What Drives Us</h2>
-                        <p className="section-subtitle">Our core values guide everything we do at EduVision Institute</p>
+                        <span className="section-label">Our Core Values</span>
+                        <h2 className="section-title">Institutional Core Principles</h2>
+                        <p className="section-subtitle">Our values serve as the structural framework for all research and instruction at EVIT</p>
                     </div>
                     <div className="values-grid">
                         {values.map((value, index) => (
@@ -141,9 +140,9 @@ const About = () => {
             <section className="section team-section">
                 <div className="container">
                     <div className="section-header">
-                        <span className="section-label">Our Team</span>
-                        <h2 className="section-title">Meet Our Leadership</h2>
-                        <p className="section-subtitle">Industry veterans committed to your success</p>
+                        <span className="section-label">Institutional Leadership</span>
+                        <h2 className="section-title">Meet Our Distinguished Faculty</h2>
+                        <p className="section-subtitle">Corporate technology veterans and academic researchers dedicated to your engineering success</p>
                     </div>
                     <div className="team-grid">
                         {team.map((member, index) => (
@@ -164,9 +163,9 @@ const About = () => {
                 <div className="container">
                     <div className="cta-about-content glass-card">
                         <FiTrendingUp className="cta-icon" />
-                        <h2>Join 5000+ Students Who Transformed Their Careers</h2>
-                        <p>Start your journey with EduVision Institute today and unlock your potential in the tech industry.</p>
-                        <Link to="/courses" className="btn btn-primary btn-lg">Explore Courses</Link>
+                        <h2>Join 5000+ Alumni Leading Tech Globally</h2>
+                        <p>Begin your strategic technological instruction today at EVIT and unlock senior technical roles.</p>
+                        <Link to="/courses" className="btn btn-primary btn-lg">View Academic Catalog</Link>
                     </div>
                 </div>
             </section>

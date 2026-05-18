@@ -12,6 +12,7 @@ import testimonialRoutes from "./routes/testimonialRoutes.js";
 import contactRoutes from "./routes/contactRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import studentRegistrationRoutes from "./routes/studentRegistrationRoutes.js";
+import paymentRoutes from "./routes/paymentRoutes.js";
 
 dotenv.config();
 
@@ -38,6 +39,7 @@ app.use("/api/testimonials", testimonialRoutes);
 app.use("/api/contact", contactRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/student-registrations", studentRegistrationRoutes);
+app.use("/api/payments", paymentRoutes);
 
 app.get("/api/health", (req, res) => {
     res.json({ status: "OK", message: "EduVision Institute Server is running!" });

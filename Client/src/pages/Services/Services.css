@@ -24,7 +24,7 @@
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
-    color: white;
+    color: var(--text-primary);
     margin-bottom: 20px;
 }
 
@@ -144,7 +144,7 @@
     background: var(--gradient-primary);
     font-size: 1.5rem;
     font-weight: 900;
-    color: white;
+    color: var(--text-primary);
     margin-bottom: 20px;
     box-shadow: 0 4px 20px var(--primary-glow);
     font-family: var(--font-heading);

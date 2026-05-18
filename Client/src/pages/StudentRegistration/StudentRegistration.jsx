@@ -14,6 +14,8 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
     const [step, setStep] = useState(1);
     const [submitting, setSubmitting] = useState(false);
     const [submitted, setSubmitted] = useState(false);
+    const [paymentProcessing, setPaymentProcessing] = useState(false);
+    const [paymentSuccess, setPaymentSuccess] = useState(false);
 
     const [formData, setFormData] = useState({
         fullName: user?.name || "",
@@ -113,6 +115,28 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
         }
     };
 
+    const handlePayment = async () => {
+        setPaymentProcessing(true);
+        try {
+            const { data } = await API.post("/payments/create-checkout-session", {
+                enrollmentId: enrollment._id
+            });
+
+            if (!data.success) {
+                toast.error("Failed to create checkout session");
+                setPaymentProcessing(false);
+                return;
+            }
+
+            // Redirect to Stripe Checkout
+            window.location.href = data.url;
+
+        } catch (error) {
+            toast.error(error.response?.data?.message || "Payment initialization failed");
+            setPaymentProcessing(false);
+        }
+    };
+
     if (submitted) {
         return (
             <div className="sr-modal-overlay" onClick={onClose}>
@@ -121,10 +145,15 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                         <div className="sr-success-icon-wrap">
                             <FiCheckCircle className="sr-success-icon" />
                         </div>
-                        <h2 className="sr-success-title">Registration Successful!</h2>
+                        <h2 className="sr-success-title">
+                            {paymentSuccess ? "Payment Successful!" : "Registration Successful!"}
+                        </h2>
                         <p className="sr-success-text">
-                            Your registration for <strong>{enrollment.course?.title}</strong> has been submitted successfully.
-                            Our team will review your details and get back to you shortly.
+                            {paymentSuccess ? (
+                                <>Your payment for <strong>{enrollment.course?.title}</strong> has been processed successfully. You can now access your course.</>
+                            ) : (
+                                <>Your registration for <strong>{enrollment.course?.title}</strong> has been submitted. Please complete the payment to secure your seat and get instant access.</>
+                            )}
                         </p>
                         <div className="sr-success-info glass-card">
                             <div className="sr-success-row">
@@ -137,12 +166,29 @@ const StudentRegistration = ({ enrollment, onClose, onSuccess }) => {
                             </div>
                             <div className="sr-success-row">
                                 <span>Status</span>
-                                <span className="badge badge-warning">Pending Review</span>
+                                {paymentSuccess ? (
+                                    <span className="badge badge-success">Enrolled</span>
+                                ) : (
+                                    <span className="badge badge-warning">Pending Payment</span>
+                                )}
                             </div>
                         </div>
-                        <button className="btn btn-primary" onClick={onClose}>
-                            Close
-                        </button>
+                        <div style={{ display: "flex", gap: "12px", justifyContent: "center", marginTop: "24px" }}>
+                            {!paymentSuccess ? (
+                                <>
+                                    <button className="btn btn-secondary" onClick={onClose} disabled={paymentProcessing}>
+                                        Pay Later
+                                    </button>
+                                    <button className="btn btn-primary" onClick={handlePayment} disabled={paymentProcessing}>
+                                        {paymentProcessing ? "Processing..." : "Proceed to Payment"}
+                                    </button>
+                                </>
+                            ) : (
+                                <button className="btn btn-primary" onClick={onClose}>
+                                    Go to Dashboard
+                                </button>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

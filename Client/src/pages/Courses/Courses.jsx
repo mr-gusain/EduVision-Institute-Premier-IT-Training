@@ -41,6 +41,26 @@ const Courses = () => {
         fetchCourses();
     }, [fetchCourses]);
 
+    useEffect(() => {
+        const query = new URLSearchParams(window.location.search);
+        if (query.get("payment") === "success") {
+            const sessionId = query.get("session_id");
+            const enrollmentId = query.get("enrollment_id");
+            if (sessionId && enrollmentId) {
+                API.post("/payments/verify", { session_id: sessionId, enrollmentId })
+                    .then(() => {
+                        toast.success("Payment successful! You are now fully enrolled.");
+                        // Clean up URL
+                        window.history.replaceState({}, document.title, window.location.pathname);
+                    })
+                    .catch(() => toast.error("Error verifying payment"));
+            }
+        } else if (query.get("payment") === "cancelled") {
+            toast.info("Payment was cancelled.");
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
+    }, []);
+
     const handleSearch = (e) => {
         e.preventDefault();
         setLoading(true);
