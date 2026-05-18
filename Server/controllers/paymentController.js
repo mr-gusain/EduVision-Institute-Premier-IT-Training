@@ -7,7 +7,7 @@ dotenv.config();
 
 export const createCheckoutSession = async (req, res) => {
     try {
-        const stripeKey = process.env.STRIPE_SECRET_KEY;
+        const stripeKey = (process.env.STRIPE_SECRET_KEY || "").trim();
         const { enrollmentId } = req.body;
 
         if (!enrollmentId) {
@@ -31,6 +31,8 @@ export const createCheckoutSession = async (req, res) => {
         }
 
         const stripe = new Stripe(stripeKey);
+        
+        const clientUrl = (process.env.CLIENT_URL || "http://localhost:5173").trim();
 
         // Determine price
         const amount = enrollment.course.discountPrice > 0 ? enrollment.course.discountPrice : enrollment.course.price;
@@ -42,17 +44,17 @@ export const createCheckoutSession = async (req, res) => {
                     price_data: {
                         currency: "inr",
                         product_data: {
-                            name: enrollment.course.title,
+                            name: enrollment.course.title.substring(0, 250), // Stripe limit
                             description: `Enrollment ID: ${enrollmentId}`,
                         },
-                        unit_amount: amount * 100,
+                        unit_amount: Math.round(amount * 100), // Ensure integer
                     },
                     quantity: 1,
                 },
             ],
             mode: "payment",
-            success_url: `${process.env.CLIENT_URL || "http://localhost:5173"}/courses?payment=success&session_id={CHECKOUT_SESSION_ID}&enrollment_id=${enrollmentId}`,
-            cancel_url: `${process.env.CLIENT_URL || "http://localhost:5173"}/courses?payment=cancelled`,
+            success_url: `${clientUrl}/courses?payment=success&session_id={CHECKOUT_SESSION_ID}&enrollment_id=${enrollmentId}`,
+            cancel_url: `${clientUrl}/courses?payment=cancelled`,
             metadata: {
                 enrollmentId: enrollmentId.toString()
             }
@@ -71,7 +73,7 @@ export const createCheckoutSession = async (req, res) => {
 
 export const verifyPayment = async (req, res) => {
     try {
-        const stripeKey = process.env.STRIPE_SECRET_KEY;
+        const stripeKey = (process.env.STRIPE_SECRET_KEY || "").trim();
         const { session_id, enrollmentId } = req.body;
 
         if (!session_id || !enrollmentId) {
